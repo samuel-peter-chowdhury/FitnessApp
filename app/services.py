@@ -1,17 +1,32 @@
 from app import db
 from app.models import User, Routine, Exercise, ExerciseRoutineJoin
+import json
 
 def commit(entity):
 	db.session.add(entity)
 	db.session.commit()
 
 class Initializer:
-	@staticmethod
-	def initialize():
+	def initialize(self):
 		print("...Initializing database...")
-		if (len(ExerciseService.getAllExercises()) <= 0):
+		if (len(ExerciseService.getAllExercises()) == 0):
 			print("...Initializing Exercises...")
+			self.initializeExercises()
 		print("...Initialization complete...")
+
+	@staticmethod
+	def initializeExercises():
+		with open('exercises.json') as f:
+			data = list(json.load(f))
+		for exercise in data:
+			ExerciseService.addExercise(exercise['id'], exercise['name'], exercise['muscle'],
+			                            exercise['equipment'], exercise['difficulty'], exercise['instructions'])
+
+class TableService:
+	@staticmethod
+	def clearTable(table):
+		table.query.delete()
+		db.session.commit()
 
 class UserService:
 	@staticmethod

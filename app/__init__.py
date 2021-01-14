@@ -9,4 +9,5 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from app import routes, models, services
-services.Initializer.initialize()
+initializer = services.Initializer()
+initializer.initialize()
