@@ -1,4 +1,4 @@
-# Fitness App
+# Fitness App Backend
 
 ## Created by Samuel Chowdhury
 
